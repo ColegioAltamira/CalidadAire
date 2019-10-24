@@ -28,7 +28,7 @@
 #define LED_BAR_HELPER_PIN A1
 
 //Definición de especificaciones
-#define VERSION "1.0.1"
+#define VERSION "1.0.2"
 #define SERIAL_BAUDRATE 9600
 #define FILE_NAME "sensor.csv"
 #define WAIT_TIME_MS 5000
@@ -101,6 +101,7 @@ void printToSD(int val) {
         Serial.println("ERROR: No se pudo abrir el archivo");
         failureSequence_Blocking();
     }
+    dt_rtc_sync = rtc.now();
 
     //Fecha
     if(dt_rtc_sync.day() < 10){
