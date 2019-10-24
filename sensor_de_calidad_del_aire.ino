@@ -28,10 +28,10 @@
 #define LED_BAR_HELPER_PIN A1
 
 //Definición de especificaciones
-#define VERSION "0.1"
+#define VERSION "1.0.1"
 #define SERIAL_BAUDRATE 9600
 #define FILE_NAME "sensor.csv"
-#define WAIT_TIME_MS 1000
+#define WAIT_TIME_MS 5000
 
 int bar[10] = {
         LED_BAR_1,
@@ -103,17 +103,37 @@ void printToSD(int val) {
     }
 
     //Fecha
+    if(dt_rtc_sync.day() < 10){
+        file.print("0");
+    }
     file.print(dt_rtc_sync.day());
     file.print("/");
+    if(dt_rtc_sync.month() < 10){
+        file.print("0");
+    }
     file.print(dt_rtc_sync.month());
     file.print("/");
+    if(dt_rtc_sync.year() < 10){
+        file.print("0");
+    }
     file.print(dt_rtc_sync.year());
     file.print(",");
 
     //Hora
+    if(dt_rtc_sync.hour() < 10){
+        file.print("0");
+    }
     file.print(dt_rtc_sync.hour());
     file.print(":");
+    if(dt_rtc_sync.minute() < 10){
+        file.print("0");
+    }
     file.print(dt_rtc_sync.minute());
+    file.print(":");
+    if(dt_rtc_sync.second() < 10){
+        file.print("0");
+    }
+    file.print(dt_rtc_sync.second());
     file.print(",");
 
     //Temperatura
@@ -153,7 +173,10 @@ void setup() {
 
     printStartSequence();
 
+    Serial.println();
     Serial.println("Iniciando...");
+    Serial.println("/********************************/");
+    Serial.println();
 
     //Iniciamos conexión con el modulo SD
     Serial.println("Conectando con el módulo SD..");
